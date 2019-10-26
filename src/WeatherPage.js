@@ -1,21 +1,30 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 import './WeatherPage.scss'
 import {CityClock} from "./CityClock.js";
+import {connect} from "react-redux";
+import {loadWeatherForCity} from "./store/weather.actions.js";
 
-export function WeatherPage() {
-  return (
+function WeatherPage({match, weather, loadWeatherForCity}) {
+
+  let {city} = match.params;
+  useEffect(() => {
+    console.log(city);
+    loadWeatherForCity(city)
+  }, [city]);
+
+  return weather && (
     <div className="weather page">
       <div className="weather__weatherClock">
-        <CityClock className="" timezoneOffset={0} city="Budapest" />
+        <CityClock className="" timezoneOffset={weather.city.timezone} city={weather.city.name} />
       </div>
       <div className="weather__weatherIcon">
-        <WeatherIcon className="" state={{icon: '800', description: 'sunshine'}} />
+        <WeatherIcon className="" state={weather} />
       </div>
       <div className="weather__details">
-        <WeatherDetail icon='thermometer' value='-10 °C' />
-        <WeatherDetail icon='sunrise' value='09:37' />
-        <WeatherDetail icon='sunset' value='15:42' />
+        <WeatherDetail icon='thermometer' value={weather.temperature} />
+        <WeatherDetail icon='sunrise' value={weather.sunrise} />
+        <WeatherDetail icon='sunset' value={weather.sunset} />
       </div>
 
     </div>
@@ -40,3 +49,7 @@ function WeatherIcon({state}) {
   );
 }
 
+export default connect(
+    ({weather}) => ({weather}),
+    {loadWeatherForCity})
+    (WeatherPage)

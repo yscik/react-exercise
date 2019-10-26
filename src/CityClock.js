@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {adjustDateForTimezone, formatTime} from "./timeFormat.js";
 
 export function CityClock({timezoneOffset = 0, city})
 {
@@ -20,19 +21,9 @@ export function CityClock({timezoneOffset = 0, city})
 }
 
 function getCurrentFormattedTimeForTimezone(timezoneOffset) {
-  const date = getDateForTimezone(timezoneOffset);
-
-  return formatTime(date);
-}
-
-function getDateForTimezone(timezoneOffset) {
   const date = new Date();
-  date.setUTCHours(date.getUTCHours() + timezoneOffset || 0);
-  return date;
+  adjustDateForTimezone(date, timezoneOffset);
+
+  return formatTime(date, {separator: '\n'});
 }
 
-function formatTime(date) {
-  const [hour, min, sec] = [date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()]
-      .map(s => ("" + s).padStart(2, '0'));
-  return `${hour}\n${min}\n${sec}`;
-}

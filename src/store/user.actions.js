@@ -1,3 +1,4 @@
+import {apiGet, apiGetMock} from "../api.js";
 
 export function userLoaded(user) {
   return {
@@ -21,7 +22,7 @@ export function userNoSession() {
 
 export function loadUser() {
   return async (dispatch) => {
-    const user = await fetch('/api/user');
+    const user = await apiGetMock('/api/user');
 
     if(user)
       dispatch(userLoaded(user));
@@ -34,7 +35,7 @@ export function loadUser() {
 export function loginUser(userCredentials) {
   return async (dispatch) => {
 
-    const {error} = await fetch('/api/login', {method: 'POST', body: userCredentials});
+    const {error} = await apiGetMock('/api/login', {method: 'POST', body: userCredentials});
 
     if(error)
       dispatch(userLoginFail(error));
@@ -43,12 +44,3 @@ export function loginUser(userCredentials) {
 
   }
 }
-
-async function fetch(url, opts) {
-  return {
-    '/api/login': { },
-    '/api/user': { name: 'Macauley Valenzuela', cities: ['Budapest', 'Madrid']},
-
-  }[url];
-}
-
