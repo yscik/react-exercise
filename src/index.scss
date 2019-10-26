@@ -19,6 +19,12 @@ html, body, #root {
 }
 .page {
   height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 * {
@@ -31,4 +37,5 @@ html, body, #root {
   --color-pri: #267DBD;
   --color-text: #93B7CC;
   --color-sec: #3893B1;
+  --color-focus: #FFFFFF;
 }
