@@ -1,0 +1,21 @@
+
+.selectCity {
+  text-align: center;
+
+  &__listItem {
+
+    font-size: 2rem;
+
+    margin: .5rem 0;
+    display: block;
+    font-weight: 700;
+  }
+
+  &__addCity {
+    color: #00FF40;
+    font-size: 4rem;
+    font-weight: 700;
+    padding: 0 1rem;
+
+  }
+}

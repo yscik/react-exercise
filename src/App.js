@@ -3,6 +3,7 @@ import './App.scss';
 import WeatherPage from "./WeatherPage.js";
 import {HashRouter, Route, Switch} from "react-router-dom";
 import LoginPage from "./LoginPage.js";
+import SelectCityPage from "./SelectCity.js";
 import {connectBasic} from "./store/store.js";
 
 function App({user}) {
@@ -11,6 +12,7 @@ function App({user}) {
   else return (
     <HashRouter>
       <Switch>
+        <Route path='/' exact={true} component={SelectCityPage}/>
         <Route path='/weather/:city' component={WeatherPage}/>
       </Switch>
     </HashRouter>
