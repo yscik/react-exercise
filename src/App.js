@@ -1,11 +1,25 @@
 import React from 'react';
 import './App.scss';
 import {WeatherPage} from "./WeatherPage.js";
+import {HashRouter, Route, Switch} from "react-router-dom";
+import LoginPage from "./LoginPage.js";
+import {connectBasic} from "./store/store.js";
 
-function App() {
-  return (
-    <WeatherPage />
+function App({user}) {
+  if(!user)
+    return <LoginPage />;
+  else return (
+    <HashRouter>
+      <Switch>
+        <Route path='/' exact={true} component={WeatherPage}/>
+      </Switch>
+    </HashRouter>
   );
+
 }
 
-export default App;
+App.storeProps = {
+  state: ['user']
+}
+
+export default connectBasic(App);
