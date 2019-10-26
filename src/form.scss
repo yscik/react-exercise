@@ -80,3 +80,33 @@ a {
     transform: translateY(2px);
   }
 }
+
+.autocomplete {
+  &__input {
+    position: relative;
+    &:after {
+      position: absolute;
+      right: 0;
+      top: 0;
+      line-height: 1rem;
+      content: '⌄';
+      font-size: 3rem;
+      font-weight: 700;
+    }
+  }
+  &__highlight {
+    color: var(--color-text);
+  }
+  &__result {
+    font-size: 2rem;
+    padding: .1rem .3rem;
+    margin: 0 -.3rem;
+    color: var(--color-pri);
+    &--highlighted {
+      background: #267DBD;
+      color: #fff;
+
+
+    }
+  }
+}
