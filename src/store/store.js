@@ -15,3 +15,34 @@ export default function configureStore(initialState) {
       applyMiddleware(thunk)
   );
 }
+
+export function connectBasic(Component) {
+
+  const stateFn = (state) => {
+    if(!Component.storeProps.state)
+      return {};
+    return mapObject(Component.storeProps.state,
+        ([,value]) => state[value])
+  };
+
+  const actionFn = (dispatch) => {
+    if(!Component.storeProps.actions)
+      return {};
+    return mapObject(Component.storeProps.actions,
+        ([,value]) => (...args) => dispatch(value(...args))
+    );
+  };
+
+  return connect(stateFn, actionFn)(Component)
+}
+
+function mapObject(obj, valueFn) {
+  const entries = Array.isArray(obj)
+    ? obj.map(key => [key,key])
+    : Object.entries(obj);
+  return entries
+      .reduce((m, [key,value]) => {
+        m[key] = valueFn([key, value]);
+        return m;
+      }, {})
+}
