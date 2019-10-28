@@ -5,9 +5,12 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from "react-redux";
 import configureStore from "./store/store.js";
-import {loadUser} from "./store/user.actions.js";
+import {loadUser, setSession} from "./store/user.actions.js";
 
 const store = configureStore();
+
+store.dispatch(setSession());
+store.dispatch(loadUser());
 
 ReactDOM.render(
     <Provider store={store}>

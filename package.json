@@ -13,6 +13,7 @@
     "redux-thunk": "^2.3.0",
     "weather-icons": "erikflowers/weather-icons"
   },
+  "type": "module",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -22,6 +23,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "proxy": "http://localhost:8066",
   "browserslist": {
     "production": [
       ">0.2%",

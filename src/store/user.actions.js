@@ -1,4 +1,4 @@
-import {apiGet, apiGetMock} from "../api.js";
+import {apiGet, apiPost} from "../api.js";
 
 export function userLoaded(user) {
   return {
@@ -21,26 +21,48 @@ export function userNoSession() {
 }
 
 export function loadUser() {
-  return async (dispatch) => {
-    const user = await apiGetMock('/api/user');
+  return async (dispatch, getState) => {
+    const {authtoken} = getState();
+    if(!authtoken)
+      return dispatch(userNoSession());
+
+    const user = await apiGet('user/info', {headers: {
+        Authorization: `Bearer ${authtoken}`
+      }});
 
     if(user)
       dispatch(userLoaded(user));
 
     else
-      dispatch(userNoSession(user))
+      dispatch(userNoSession())
   }
+}
+
+export function setSession(authtoken = getStoredToken()) {
+  storeToken(authtoken);
+  return {
+    type: 'USER_SESSION',
+    authtoken
+  };
 }
 
 export function loginUser(userCredentials) {
   return async (dispatch) => {
 
-    const {error} = await apiGetMock('/api/login', {method: 'POST', body: userCredentials});
+    const {error,token} = await apiPost('user/login', userCredentials);
 
     if(error)
       dispatch(userLoginFail(error));
-    else
+    else {
+      dispatch(setSession(token));
       dispatch(loadUser());
-
+    }
   }
+}
+
+function getStoredToken() {
+  return sessionStorage.getItem('authtoken')
+}
+function storeToken(token) {
+  sessionStorage.setItem('authtoken', token)
 }

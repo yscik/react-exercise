@@ -21,3 +21,8 @@ export function userLoginError(state = false, action) {
       return state;
   }
 }
+export function authtoken(state = false, action) {
+  return action.type === 'USER_SESSION'
+      ? action.authtoken
+      : state;
+}
