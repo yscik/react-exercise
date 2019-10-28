@@ -1,17 +1,47 @@
 
 @import '~weather-icons/sass/weather-icons';
 
+@mixin desktop {
+  @media(min-width: 1000px) {
+    @content;
+  }
+}
+
 .weather {
+  @include desktop {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 60rem;
+  }
+
+  &__weatherClock {
+    margin-bottom: 6vh;
+
+    @include desktop {
+      order: 2;
+    }
+  }
+  &__weatherIcon {
+    margin-bottom: 3vh;
+
+  }
+  &__details {
+    @include desktop {
+      order: 3;
+    }
+  }
+
+  &__item {
+    @include desktop {
+
+      margin-bottom: 0;
+
+    }
+  }
 
 
-}
-
-.weather__weatherClock {
-  margin-bottom: 6vh;
-}
-
-.weather__weatherIcon {
-  margin-bottom: 3vh;
 }
 
 .cityClock {

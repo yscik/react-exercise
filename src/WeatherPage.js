@@ -7,13 +7,13 @@ export function WeatherPage({weather}) {
 
   return weather && (
     <div className="weather page">
-      <div className="weather__weatherClock">
+      <div className="weather__item weather__weatherClock">
         <CityClock className="" timezoneOffset={weather.city.timezone} city={weather.city.name} />
       </div>
-      <div className="weather__weatherIcon">
+      <div className="weather__item weather__weatherIcon">
         <WeatherIcon className="" state={weather} />
       </div>
-      <div className="weather__details">
+      <div className="weather__item weather__details">
         <WeatherDetail icon='thermometer' value={weather.temperature} />
         <WeatherDetail icon='sunrise' value={weather.sunrise} />
         <WeatherDetail icon='sunset' value={weather.sunset} />
