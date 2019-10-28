@@ -1,5 +1,6 @@
 
 import express from 'express';
+import {initDb} from './db.js';
 
 function startApp() {
   const app = express();
@@ -8,5 +9,6 @@ function startApp() {
 }
 
 (async function() {
+  await initDb();
   startApp();
 })();
