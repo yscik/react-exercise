@@ -1,5 +1,6 @@
 import React from "react";
 import {AutocompleteInput} from "./AutocompleteInput.js";
+import {Link} from "react-router-dom";
 
 export function AddCityPage() {
 
@@ -8,6 +9,7 @@ export function AddCityPage() {
   }
   return (
       <div className="addCity page">
+        <Link to='/' className='page__backlink' />
         <form className='form'>
           <label className="inputControl form__input">
             <AutocompleteInput source={searchCity} onSelect={console.log}/>
