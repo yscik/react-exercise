@@ -2,16 +2,8 @@ import React, {useEffect} from "react";
 
 import './WeatherPage.scss'
 import {CityClock} from "./CityClock.js";
-import {connect} from "react-redux";
-import {loadWeatherForCity} from "./store/weather.actions.js";
 
-function WeatherPage({match, weather, loadWeatherForCity}) {
-
-  let {city} = match.params;
-  useEffect(() => {
-    console.log(city);
-    loadWeatherForCity(city)
-  }, [city]);
+export function WeatherPage({weather}) {
 
   return weather && (
     <div className="weather page">
@@ -48,8 +40,3 @@ function WeatherIcon({state}) {
     </div>
   );
 }
-
-export default connect(
-    ({weather}) => ({weather}),
-    {loadWeatherForCity})
-    (WeatherPage)
