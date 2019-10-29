@@ -52,8 +52,8 @@ async function executeMigration(script)
 {
   switch(script.type) {
     case 'js':
-      // const scriptFn = await import(script.filename);
-      // await scriptFn.default();
+      const scriptFn = await import(script.filename);
+      await scriptFn.default();
       break;
     case 'sql':
       const sql = await fs.readFile(script.filename, {encoding: 'utf8'});
