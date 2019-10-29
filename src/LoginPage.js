@@ -1,6 +1,6 @@
 import React from "react";
 import {loginUser} from "./store/user.actions.js";
-import {connectBasic} from "./store/store.js";
+import {connect} from "react-redux";
 
 
 function LoginPage({error, submit}) {
@@ -37,13 +37,4 @@ function LoginPage({error, submit}) {
   )
 }
 
-LoginPage.storeProps = {
-  state: {
-    error: 'userLoginError'
-  },
-  actions: {
-    submit: loginUser
-  }
-};
-
-export default connectBasic(LoginPage);
+export default connect(({userLoginError}) => ({error: userLoginError}), {submit: loginUser})(LoginPage);
