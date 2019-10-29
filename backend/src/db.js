@@ -1,7 +1,11 @@
 import pg from 'pg';
 import {promises as fs} from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import {env} from 'process';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 let client;
 
 export async function createDbClient() {
@@ -28,8 +32,8 @@ export async function querySingle(sql, params = []) {
 
 async function executeMigrations()
 {
-  const scriptsDir = './src/migrations';
-  const files = await fs.readdir(scriptsDir);
+  const scriptsDir = './migrations';
+  const files = await fs.readdir(path.resolve(__dirname, scriptsDir));
   const scripts = files.map(filename => ({
     id: +filename.slice(0, filename.indexOf('-')),
     filename: `${scriptsDir}/${filename}`,
@@ -56,7 +60,7 @@ async function executeMigration(script)
       await scriptFn.default();
       break;
     case 'sql':
-      const sql = await fs.readFile(script.filename, {encoding: 'utf8'});
+      const sql = await fs.readFile(path.resolve(__dirname, script.filename), {encoding: 'utf8'});
       await query(sql);
       break;
   }
