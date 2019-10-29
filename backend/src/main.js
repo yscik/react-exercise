@@ -13,7 +13,7 @@ function startApp() {
   for(let [url, handlers] of Object.entries(endpoints)) {
     apiRoutes.use(url, handlers)
   }
-  app.use(express.static('../../build'));
+  app.use(express.static('../build'));
 
   app.listen(env.PORT ||8066, () => console.log(`Ready`))
 }
