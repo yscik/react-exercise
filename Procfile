@@ -1,0 +1,1 @@
+web: sh -c 'cd backend && node --experimental-modules src/main.js'
