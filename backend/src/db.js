@@ -28,10 +28,11 @@ export async function querySingle(sql, params = []) {
 
 async function executeMigrations()
 {
-  const files = await fs.readdir('src/migrations');
+  const scriptsDir = './src/migrations';
+  const files = await fs.readdir(scriptsDir);
   const scripts = files.map(filename => ({
     id: +filename.slice(0, filename.indexOf('-')),
-    filename: `./migrations/${filename}`,
+    filename: `${scriptsDir}/${filename}`,
     type: filename.slice(filename.lastIndexOf('.')+1)
   }));
   scripts.sort((a,b) => a.id - b.id);
