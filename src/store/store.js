@@ -3,12 +3,14 @@ import thunk from 'redux-thunk';
 import {authtoken, user, userLoginError} from "./user.reducers.js";
 import {connect} from "react-redux";
 import {weather} from "./weather.reducers.js";
+import {loading} from "./common.js";
 
 const reducers = combineReducers({
   user,
   userLoginError,
   weather,
-  authtoken
+  authtoken,
+  loading
 });
 
 export default function configureStore(initialState) {
