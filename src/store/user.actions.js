@@ -64,6 +64,16 @@ export function loginUser(userCredentials) {
   }
 }
 
+export function addCity(city) {
+  return async (dispatch, getState) =>
+  {
+    const {authtoken} = getState();
+    await apiPost('user/addCity', {city}, {dispatch, authtoken});
+    console.log("city added")
+    dispatch(loadUser());
+  }
+}
+
 function getStoredToken() {
   return sessionStorage.getItem('authtoken')
 }
