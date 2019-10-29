@@ -6,8 +6,7 @@ import {connect} from "react-redux";
 import {addCity} from "./store/user.actions.js";
 import { useHistory } from "react-router-dom";
 
-export default connect(({authtoken}) => ({authtoken}))
-(function AddCityPage({authtoken, dispatch}) {
+function AddCityPage({authtoken, dispatch}) {
 
   const [selectedCity,selectCity] = useState(null);
   const history = useHistory();
@@ -40,5 +39,6 @@ export default connect(({authtoken}) => ({authtoken}))
         </form>
       </div>
   )
-})
+}
 
+export default connect(({authtoken}) => ({authtoken}))(AddCityPage)

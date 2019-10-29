@@ -10,7 +10,7 @@ function CityWeather({match, weather, loadWeatherForCity, clearWeather}) {
   useEffect(() => {
     loadWeatherForCity(city)
     return clearWeather;
-  }, [city, loadWeatherForCity]);
+  }, [city, loadWeatherForCity, clearWeather]);
 
   return (
       <div className="page">

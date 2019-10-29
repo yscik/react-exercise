@@ -26,20 +26,7 @@ html, body, #root {
   justify-content: center;
   position: relative;
 }
-.page__backlink {
-  align-self: flex-start;
-  padding: 0 1rem;
-  font-size: 4rem;
-  top: 0;
-  left: 0;
-  position: absolute;
-  color: var(--color-sec);
-  &:after {
-    content: "⌃";
-    display: inline-block;
-    transform: rotate(-90deg);
-  }
-}
+
 
 * {
   box-sizing: border-box;

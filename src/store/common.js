@@ -19,7 +19,6 @@ export function loading(state = {isLoading: false}, action) {
     case 'LOADING_STATE':
     case 'LOADING_ERROR':
       return action.loading;
-      break;
     default:
       return state;
   }

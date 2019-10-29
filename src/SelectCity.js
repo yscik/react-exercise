@@ -2,6 +2,7 @@ import React from "react";
 import {selectCity} from "./store/weather.actions.js";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
+import './SelectCity.scss';
 
 function SelectCityPage({cities = []}) {
 
