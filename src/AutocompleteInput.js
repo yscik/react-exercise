@@ -10,6 +10,7 @@ export function AutocompleteInput({source, onSelect}) {
   const [cursorPos, setCursorPos] = useState(0);
 
   async function search(input) {
+    onSelect(null);
     input = input.replace(/[^a-zA-Z]/g, '');
     setTerm(input);
     if (!input) {
@@ -24,9 +25,9 @@ export function AutocompleteInput({source, onSelect}) {
   }
 
   function highlight(item) {
-    const pos = item.indexOf(term);
-    const [t1, t2] = [item.slice(0, pos), item.slice(pos + term.length)];
-    return <>{t1}<span className='autocomplete__highlight'>{term}</span>{t2}</>
+    const pos = item.toLowerCase().indexOf(term.toLowerCase());
+    const [t1, t2, t3] = [item.slice(0, pos), item.slice(pos, pos + term.length), item.slice(pos + term.length)];
+    return <>{t1}<span className='autocomplete__highlight'>{t2}</span>{t3}</>
   }
 
   function handleKeyEvent(e) {
@@ -44,7 +45,9 @@ export function AutocompleteInput({source, onSelect}) {
           e.preventDefault();
         }
         selectedItem && selectItem(selectedItem);
+        break;
 
+      default:
         break;
     }
   }
@@ -75,7 +78,7 @@ export function AutocompleteInput({source, onSelect}) {
         {dropdownOpen && <ul className="autocomplete__results">
           {result && result.map((item, index) =>
               <li className={`autocomplete__result ${isCursorAt(index) ? 'autocomplete__result--highlighted' : ''}`}
-                  key={item} onClick={selectItem.bind(item)}>
+                  key={item} onClick={e => selectItem(item)}>
                   {highlight(item)}
               </li>)}
         </ul>}
