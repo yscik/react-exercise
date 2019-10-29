@@ -6,8 +6,6 @@ import uuidv4 from 'uuid/v4.js';
 
 const sign = promisify(jwt.sign);
 
-const users = [];
-
 export default {
   async createUser({username, password}) {
 
@@ -15,7 +13,9 @@ export default {
     password = await bcrypt.hash(password, 10);
 
     await query(`INSERT INTO "user"(id,username,password) VALUES($1, $2, $3)`, [id,username, password]);
-    await query(`INSERT INTO "userdata"(userid,cities) VALUES($1, $2)`, [id,JSON.stringify([])])
+    await query(`INSERT INTO "userdata"(userid,cities) VALUES($1, $2)`, [id,JSON.stringify([])]);
+
+    return id;
   },
   async loginUser({username, password}) {
 
@@ -34,12 +34,16 @@ export default {
 
   },
   async getUserDetails({userid}) {
-    await query(`UPDATE "userdata" SET cities = $2 WHERE userid = $1`, [userid,JSON.stringify(['Budapest', 'Madrid'])]);
-    const userdata = await querySingle(`SELECT * FROM "userdata" WHERE userid = $1`, [userid]);
-    return {name: 'Marlsmke', cities: userdata.cities}
-  },
-  async addUserCity({city})
-  {
 
+    const userdata = await querySingle(`SELECT * FROM "userdata" WHERE userid = $1`, [userid]);
+    return {cities: userdata.cities}
+  },
+
+  async addUserCity({user, city})
+  {
+    if(!city)
+      throw "Invalid city";
+
+    await query(`UPDATE "userdata" SET cities = cities::jsonb || $2::jsonb WHERE userid = $1`, [user.userid, JSON.stringify([city])]);
   }
 }

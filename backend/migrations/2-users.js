@@ -6,6 +6,7 @@ export default async function() {
   ];
 
   for(let userinfo of demoUsers) {
-    await user.createUser(userinfo)
+    const userid = await user.createUser(userinfo);
+    await user.addUserCity({user: {userid}, city: 'Budapest'})
   }
 }
