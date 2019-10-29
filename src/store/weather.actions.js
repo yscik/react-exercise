@@ -1,5 +1,13 @@
 import {apiGet} from "../api.js";
 
+export function clearWeather() {
+  return {
+    type: 'WEATHER_UNSET',
+    weather: null
+  };
+
+}
+
 export function weatherLoaded(weather) {
   return {
     type: 'WEATHER_LOADED',
@@ -7,13 +15,6 @@ export function weatherLoaded(weather) {
   };
 }
 
-export function weatherLoadError(error) {
-  console.error(error);
-  return {
-    type: 'WEATHER_LOAD_ERROR',
-    error
-  };
-}
 
 export function citySelected(city) {
   return {
@@ -24,17 +25,14 @@ export function citySelected(city) {
 
 export function loadWeatherForCity(city)
 {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const {authtoken} = getState();
 
-    try {
-      const query = encodeURIComponent(city);
-      const weatherInfo = await apiGet(`/weather/${query}`);
+    const query = encodeURIComponent(city);
+    const weatherInfo = await apiGet(`/weather/${query}`, {dispatch, authtoken});
 
-      dispatch(weatherLoaded(weatherInfo));
-    }
-    catch(err) {
-      dispatch(weatherLoadError(err))
-    }
+    dispatch(weatherLoaded(weatherInfo));
+
   }
 }
 

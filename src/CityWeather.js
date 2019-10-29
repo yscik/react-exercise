@@ -1,17 +1,15 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import {loadWeatherForCity} from "./store/weather.actions.js";
+import {clearWeather, loadWeatherForCity} from "./store/weather.actions.js";
 import {WeatherPage} from "./WeatherPage.js";
 import {Link} from "react-router-dom";
 
-function CityWeather({match, weather, loadWeatherForCity}) {
-
-
+function CityWeather({match, weather, loadWeatherForCity, clearWeather}) {
 
   let {city} = match.params;
   useEffect(() => {
-    console.log(city);
     loadWeatherForCity(city)
+    return clearWeather;
   }, [city, loadWeatherForCity]);
 
   return (
@@ -19,10 +17,9 @@ function CityWeather({match, weather, loadWeatherForCity}) {
         <Link to='/' className='page__backlink' />
         <WeatherPage weather={weather} />
       </div>
-
   )
 }
 
 export default connect(
   ({weather}) => ({weather}),
-  {loadWeatherForCity})(CityWeather)
+  {loadWeatherForCity, clearWeather})(CityWeather)
