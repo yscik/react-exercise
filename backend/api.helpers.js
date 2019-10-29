@@ -1,24 +1,25 @@
 import bodyParser from "body-parser";
 import jwt from "express-jwt";
 
-export function withAuth(appFn) {
-  return [
-    jwt({secret: 'Aehaeng9vooZe5iucai8ohY5shae2hif'}),
-    unauthorized,
-    async (req, res) => res.json(await appFn(req.user))]
-}
+export const withAuth = [
+  jwt({secret: 'Aehaeng9vooZe5iucai8ohY5shae2hif'}),
+  unauthorized,
+];
 
-export function withBody(appFn) {
-  return [bodyParser.json(), async (req, res) =>
-      res.json(await appFn(req.body))]
-}
+export const withBody = bodyParser.json();
 
-export function withParams(appFn) {
-  return async (req, res) => res.json(await appFn(req.params))
-}
+export function appCall(args, appFn) {
 
-export function withQuery(appFn) {
-  return async (req, res) => res.json(await appFn(req.query))
+  return async (req, res) => {
+    console.log('[API]', appFn);
+    try {
+      res.json(await appFn(args(req)))
+    }
+    catch(error) {
+      console.error(error)
+      res.status(400).json({error})
+    }
+  }
 }
 
 function unauthorized(err,req,res,next)
