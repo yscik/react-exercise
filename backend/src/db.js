@@ -1,13 +1,12 @@
 import pg from 'pg';
 import {promises as fs} from 'fs';
 import path from 'path';
-
+import {env} from 'process';
 let client;
 
 export async function createDbClient() {
   client = new pg.Client({
-    user: 'postgres',
-    database: 'postgres'
+    connectionString: env.DATABASE_URL || "postgres:postgres@localhost/postgres",
   });
   await client.connect()
 }
@@ -29,7 +28,7 @@ export async function querySingle(sql, params = []) {
 
 async function executeMigrations()
 {
-  const files = await fs.readdir('migrations');
+  const files = await fs.readdir('src/migrations');
   const scripts = files.map(filename => ({
     id: +filename.slice(0, filename.indexOf('-')),
     filename: `./migrations/${filename}`,
@@ -52,8 +51,8 @@ async function executeMigration(script)
 {
   switch(script.type) {
     case 'js':
-      const scriptFn = await import(script.filename);
-      await scriptFn.default();
+      // const scriptFn = await import(script.filename);
+      // await scriptFn.default();
       break;
     case 'sql':
       const sql = await fs.readFile(script.filename, {encoding: 'utf8'});

@@ -1,4 +1,4 @@
-import {formatTime, adjustDateForTimezone} from "../../src/timeFormat.js";
+import {formatTime, adjustDateForTimezone} from "../../../src/timeFormat.js";
 import fetch from 'node-fetch';
 
 export default {
